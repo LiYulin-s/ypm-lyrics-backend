@@ -1,7 +1,7 @@
 # Introduction
 This is the backend of the Plasmoid `org.kde.plasma.ypm-lyrics`.
 Please run it before use the addon.
-# Installation & Use
+# Usage
 ```sh
 $ git clone https://github.com/LiYulin-s/ypm-lyrics-backend.git
 $ cd ypm-lyrics-backend
