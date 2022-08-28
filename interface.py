@@ -8,7 +8,7 @@ status: int
 id: int
 lyrics: dict = {}
 trans: bool = True
-tlyrics: dict
+tlyrics: dict = {}
 progress: float
 currentLyric: str
 
@@ -24,7 +24,8 @@ def update(current_id: int = 0) -> dict:
     metadata = json.loads(res.text)
     progress = metadata["progress"]
     id = metadata["currentTrack"]["id"]
-    [lyrics, tlyrics] = getLyrics(id)
+    if id != current_id or not lyrics:
+        [lyrics, tlyrics] = getLyrics(id)
     return {"status": status}
 
 
