@@ -73,7 +73,6 @@ def getCurrentLyric(current_id: int) -> dict:
                 "e": id
             }
     except:
-        lyrics[key] = {}
         if lyrics[key] != {} :
             return {"status": 414,
                     "lyric": lyrics[key],
