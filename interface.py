@@ -2,7 +2,7 @@ import json
 
 import requests
 
-import lrcParse
+import lyrics_backend.lrcParse
 
 status: int
 id: int
@@ -33,11 +33,11 @@ def getLyrics(id: int) -> tuple:
     global trans
     res = requests.get("http://127.0.0.1:10754/lyric?id=" + str(id))
     lyrics_metadata = json.loads(res.text)
-    lyrics = lrcParse.lrc2dict(lyrics_metadata["lrc"]["lyric"])
+    lyrics = lyrics_backend.lrcParse.lrc2dict(lyrics_metadata["lrc"]["lyric"])
     tlyrics = lyrics_metadata.get('tlyric', 0)
     if tlyrics != 0:
         trans = True
-        tlyrics = lrcParse.lrc2dict(lyrics_metadata["tlyric"]["lyric"])
+        tlyrics = lyrics_backend.lrcParse.lrc2dict(lyrics_metadata["tlyric"]["lyric"])
     else:
         trans = False
     return (lyrics, tlyrics)
