@@ -48,7 +48,7 @@ def getCurrentLyric(current_id: int) -> dict:
     update(current_id)
     if status == 404:
         return {"status": 404}
-    key: int
+    key: int = {}
     for item in lyrics.items():
         if item[0] <= progress:
             key = item[0]
@@ -73,7 +73,7 @@ def getCurrentLyric(current_id: int) -> dict:
                 "e": id
             }
     except:
-        if lyrics[key] != {} :
+        if key != {} :
             return {"status": 414,
                     "lyric": lyrics[key],
                     "e": id}
