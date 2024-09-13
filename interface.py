@@ -2,7 +2,7 @@ import json
 
 import requests
 
-import lyrics_backend.lrcParse
+import lrcParse
 
 status: int
 id: int
@@ -33,11 +33,11 @@ def getLyrics(id: int) -> tuple:
     global trans
     res = requests.get("http://127.0.0.1:10754/lyric?id=" + str(id))
     lyrics_metadata = json.loads(res.text)
-    lyrics = lyrics_backend.lrcParse.lrc2dict(lyrics_metadata["lrc"]["lyric"])
+    lyrics = lrcParse.lrc2dict(lyrics_metadata["lrc"]["lyric"])
     tlyrics = lyrics_metadata.get('tlyric', 0)
     if tlyrics != 0:
         trans = True
-        tlyrics = lyrics_backend.lrcParse.lrc2dict(lyrics_metadata["tlyric"]["lyric"])
+        tlyrics = lrcParse.lrc2dict(lyrics_metadata["tlyric"]["lyric"])
     else:
         trans = False
     return (lyrics, tlyrics)
@@ -62,7 +62,6 @@ def getCurrentLyric(current_id: int) -> dict:
                 "tlyric": tlyrics[key],
                 "status": status,
                 "trans": trans,
-                "e": id
             }
         else:
             return {
@@ -70,16 +69,15 @@ def getCurrentLyric(current_id: int) -> dict:
                 "lyric": lyrics[key],
                 "status": status,
                 "trans": trans,
-                "e": id
             }
     except:
         if key != {} :
-            return {"status": 414,
+            aaa = False
+            return {"status": 200,
                     "lyric": lyrics[key],
-                    "e": id}
+                    "trans": aaa,
+                    "id": id}
         else:
-            return {"status": 414,
-                    "lyric": "间奏",
-                    "e": id}
+            return {"status": 404,
+                    "id": id}
         update()
-        print(getCurrentLyric(0))
