@@ -10,9 +10,19 @@ def lrc2dict(lrc: str) -> dict:
             lyric = line
             for tplus in time_stamps:
                 lyric = lyric.replace(tplus, '')
+            # 如果歌词为空，跳过这一行
+            if not lyric.strip():
+                continue
             # 解析时间
             for tplus in time_stamps:
                 t = remove(tplus)
+                # 匹配时间戳修改时间防止报错
+                if t == '99:00.00':
+                    t = '00:00.00'
+                if t == '00:99.99':
+                    t = '00:00.00'
+                if t == '00:99.00':
+                    t = '00:00.00'
                 tag_flag = t.split(':')[0]
                 # 跳过: [ar: 逃跑计划]
                 if not tag_flag.isdigit():
